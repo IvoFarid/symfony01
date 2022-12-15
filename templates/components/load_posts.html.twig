@@ -1,0 +1,118 @@
+{% if clicked %}
+<div {{attributes}} class="container d-flex gap-5 mt-5 mx-auto justify-content-center flex-wrap">
+  <section class="col-xxl-3 col-xl-3 col-md-10 col-sm-12 col-lg-8 bg-light rounded-3" style="height:fit-content; overflow-y:auto; max-height:80vh;">
+    <div class="p-4">
+      <p class="fs-5 border-bottom pb-2 mb-3 fw-light">My Follows</p>
+      {% if relations %}
+        <div class="d-flex flex-column gap-2">
+          {% for relation in relations %}
+          <div class="d-flex align-items-center justify-content-between gap-2 border-bottom pb-2 ">
+            <div class="d-flex align-items-center gap-2">
+              <img src="{{relation.follow.imagePath ? relation.follow.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+              <p class="mb-0">{{relation.follow.nick}}</p>
+            </div>
+            <button
+              type="button" 
+              class="access-btn" 
+              data-action="live#action" 
+              data-action-name="loadPosts(id={{relation.follow.id}}, value={{false}})">
+              see posts
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+  <section class="col-xxl-7 col-xl-7 col-md-10 col-sm-12 col-lg-8 bg-light rounded-3 p-4" style="height:fit-content; overflow-y:auto; max-height:80vh;">
+    <p class="fs-5 fw-light">view what your favorites shared</p>
+    <div class="d-flex flex-column gap-3 align-items-center">
+        {% for post in loadedPosts %}
+        <div class="post-card bg-light border rounded-3 p-3 w-100">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+              <img src="{{post.author.imagePath ? post.author.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px; object-position:top;" alt="profile photo">
+              <a href="/{{post.author.nick}}" class="post-user-name text-decoration-none user-select-none mb-0" style="font-size:1.1rem;">{{post.author.nick}}</a>
+            </div>
+            <p class="text-secondary mb-0 user-select-none">{{post.createdAt | date("d/m/y h:m")}}</p>
+          </div>
+            <p class="fs-5 mb-0 fw-light">{{post.title}}</p>
+            <p class="mb-1 fw-light">{{post.description}}</p>
+            <div class="d-flex justify-content-between w-100 align-items-center">
+                <a href="{{path('app_post_show', {'id':post.id})}}">view post</a>
+                <div class="d-flex gap-2">
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <p class="text-center mb-0">{{ post.upVotes }}</p>
+                    <i class="fa-regular fa-thumbs-up"></i>
+                  </div>
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <i class="fa-regular fa-thumbs-down"></i>
+                    <p class="text-center mb-0">{{ post.downVotes }}</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+        {% endfor %}
+    </div>
+  </section>
+{% else %}
+<div {{attributes}} class="container d-flex gap-5 mt-5 mx-auto justify-content-center flex-wrap">
+  <section class="col-xxl-3 col-xl-3 col-md-10 col-sm-12 col-lg-8 bg-light rounded-3" style="height:fit-content; overflow-y:auto; max-height:80vh;">
+    <div class="p-4">
+      <p class="fs-5 border-bottom pb-2 mb-3 fw-light">My Follows</p>
+      {% if relations %}
+        <div class="d-flex flex-column gap-2">
+          {% for relation in relations %}
+          <div class="d-flex align-items-center justify-content-between gap-2 border-bottom pb-2 ">
+            <div class="d-flex align-items-center gap-2">
+              <img src="{{relation.follow.imagePath ? relation.follow.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+              <p class="mb-0">{{relation.follow.nick}}</p>
+            </div>
+            <button
+              type="button" 
+              class="access-btn" 
+              data-action="live#action" 
+              data-action-name="loadPosts(id={{relation.follow.id}}, value={{true}})">
+              see posts
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+  <section class="col-xxl-7 col-xl-7 col-md-10 col-sm-12 col-lg-8 bg-light rounded-3 p-4" style="height:fit-content; overflow-y:auto; max-height:80vh;">
+    <p class="fs-5 fw-light">view what your favorites shared</p>
+    <div class="d-flex flex-column gap-3 align-items-center">
+        {% for post in loadedPosts %}
+        <div class="post-card bg-light border rounded-3 p-3 w-100">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+              <img src="{{post.author.imagePath ? post.author.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px; object-position:top;" alt="profile photo">
+              <a href="/{{post.author.nick}}" class="post-user-name text-decoration-none user-select-none mb-0" style="font-size:1.1rem;">{{post.author.nick}}</a>
+            </div>
+            <p class="text-secondary mb-0 user-select-none">{{post.createdAt | date("d/m/y h:m")}}</p>
+          </div>
+            <p class="fs-5 mb-0 fw-light">{{post.title}}</p>
+            <p class="mb-1 fw-light">{{post.description}}</p>
+            <div class="d-flex justify-content-between w-100 align-items-center">
+                <a href="{{path('app_post_show', {'id':post.id})}}">view post</a>
+                <div class="d-flex gap-2">
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <p class="text-center mb-0">{{ post.upVotes }}</p>
+                    <i class="fa-regular fa-thumbs-up"></i>
+                  </div>
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <i class="fa-regular fa-thumbs-down"></i>
+                    <p class="text-center mb-0">{{ post.downVotes }}</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+        {% endfor %}
+    </div>
+  </section>
+  
+{% endif %}

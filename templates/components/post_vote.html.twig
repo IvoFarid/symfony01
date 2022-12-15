@@ -1,0 +1,69 @@
+{# templates/components/post_vote.html.twig #}
+{% if not app.user %}
+  <div class="d-flex align-items-center gap-2">
+              <div class="d-flex fs-5 text-secondary gap-1 align-items-center">
+                  <i class="fa-regular fa-thumbs-up"></i>
+                  <p class="mb-0">{{ post.upVotes }}</p>
+              </div>
+              <div class="d-flex fs-5 text-secondary gap-1 align-items-center">
+                  <i class="fa-regular fa-thumbs-down"></i>
+                  <p class="mb-0">{{ post.downVotes }}</p>
+              </div>
+            </div>
+{% else %}
+{% if app.user and not (hasVoted) %}
+<div {{attributes}} class="d-flex gap-2">
+  <div class="d-flex gap-1 align-items-center">
+    <button
+        type="button"
+        class="vote-btn"
+        data-action="live#action"
+        data-action-name="vote(direction=up)"
+    >
+        <i class="fa fa-thumbs-up"></i>
+    </button>
+    <p class="text-dark mb-0">{{post.upVotes}}</p> 
+  </div>
+
+  <div class="d-flex gap-1 align-items-center">
+    <button
+        type="button"
+        class="vote-btn"
+        data-action="live#action"
+        data-action-name="vote(direction=down)"
+    >
+        <i class="fa fa-thumbs-down"></i>
+    </button>
+        <p class=" text-dark mb-0">{{post.downVotes}}</p> 
+  </div>
+</div>
+{% else %}
+  {% if hasVoted and app.user %}
+        <div class="d-flex">
+              <div class="d-flex fs-5 gap-3">
+                      <div class="d-flex gap-1 align-items-center voted-btn like">
+                          {% if direction %}
+                                <i class="fa fa-thumbs-up "></i>
+                                <p class=" mb-0">{{ post.upVotes }}</p>
+                              {% else %}
+                                <i class="fa fa-thumbs-up"></i>
+                                <p class="mb-0">{{ post.upVotes }}</p>
+
+                              {% endif %}
+                          </div>
+              <div class="d-flex gap-1 align-items-center voted-btn dislike">
+                          {% if not direction %}
+
+                              <i class="fa fa-thumbs-down"></i>
+                              <p class="text-danger mb-0">{{ post.downVotes }}</p>
+                              {% else %}
+                              <i class="fa fa-thumbs-down"></i>
+                              <p class="mb-0">{{ post.downVotes }}</p>
+
+                              {% endif %}
+</div>      
+            </div>
+        </div>
+  {% endif %}
+{% endif %}
+{% endif %}

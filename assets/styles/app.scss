@@ -1,0 +1,124 @@
+$dark: #252323;
+$bg-black: #edf2f4;
+.post-card {
+  transition: all .25s ease-in-out;
+  background-color: #F8F9FA;
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.04);
+}
+.post-card:hover {
+  background-color:white;
+  // transform: scale(1.005);
+}
+.go-back-btn svg{
+  color:#8d99ae;
+  transition: .25s ease-in-out;
+}
+.go-back-btn:hover svg {
+  color:black;
+}
+.delete-btn {
+  border: none;
+  background:transparent;
+}
+.delete-btn svg {
+  font-size:1.2rem;
+  transition: .2s ease-in-out;
+}
+.delete-btn:hover svg {
+  // transform: scale(1.05);
+  color:#e63946;
+}
+.edit-btn {
+  border: none;
+  background:transparent;
+}
+.edit-btn svg {
+  font-size:1.2rem;
+  transition: .2s ease-in-out;
+}
+.edit-btn:hover svg {
+  // transform: scale(1.05);
+  color:#2a9d8f;
+}
+.post-user-name {
+  color: #8d99ae;
+}
+.navbar-button {
+  text-decoration:none;
+  color:black;
+  border-radius:.25rem;
+  border: 1px solid black;
+  padding:.25rem .5rem;
+  background-color:white;
+  transition: all .2s ease-in;
+}
+.navbar-button:hover {
+  color:white;
+  background-color:rgb(102, 102, 102);
+}
+.user-nick-nav {
+  color:black;
+  text-decoration: none;
+  transition: .2s all ease-in-out;
+}
+.user-nick-nav:hover {
+  text-decoration: underline
+}
+.access-btn {
+  background-color: white;
+  padding: .5rem;
+  color:black;
+  border-radius: .25rem;
+  border: 1px solid black;
+  transition: .2s all ease-in;
+}
+.access-btn:hover {
+  background-color: rgb(61, 61, 61);
+  color: white;
+}
+form>div>ul>li {
+  color:#e63946;
+}
+.voted-btn.like {
+  color: #2a9d8f;
+  transition: all .2s ease-in-out;
+  border:0;
+}
+.voted-btn.dislike {
+  color: #ef233c;
+  transition: all .2s ease-in-out;
+  border:0;
+}
+.vote-btn {
+  background-color: grey;
+  color: white;
+  padding: .25rem .5rem;
+  transition: all .2s ease-in-out;
+  border:0;
+  border-radius: 100%;
+}
+.vote-btn.like:hover {
+  background-color: grey;
+}
+.vote-btn:hover {
+  background-color: black;
+  color: white;
+}
+.icon-btn {
+  border-radius: 1rem;
+  transition: all .2s ease-in;
+  padding: .2rem .55rem !important;
+}
+.icon-btn:hover {
+  background-color: rgb(102, 102, 102);
+  color: white;
+}
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+    border:none;
+}
+
+@import '~bootstrap/scss/bootstrap';

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony01{% endblock %}
+
+{% block body %}
+    <div class="container d-flex gap-3">
+      <div class="col-xl-10 col-md-10 col-sm-10 col-xs-12 mt-5 mx-auto d-flex flex-column gap-3 align-items-center">
+        <div class="col-xl-10 col-md-10 col-sm-10 col-xs-12 bg-light d-flex rounded-3 p-3 gap-3">
+          {% if app.user %}
+          <div class="w-100 d-flex">
+            <div class="d-flex w-100 gap-2">
+              <div style="width:50px">
+                <img src="{{ app.user.imagePath ? app.user.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 40px; height:40px; object-position:top;" alt="profile photo">
+              </div>
+              <div class="d-flex flex-column w-100" style="font-size:1.175rem">
+                  {{ form_start(form) }}
+                    {{ form_widget(form) }}
+              </div>
+              {% if (app.user) %}
+                <div class="align-self-end d-flex justify-content-end">
+                  <button class="access-btn px-1 py-1 mb-2">{{ button_label|default('submit') }}</button>
+                </div>
+                {{ form_end(form) }}
+                  {% endif %}
+            </div>
+          </div>
+          {% else %}
+            <p class="p-0 mb-0 user-select-none fs-4 fw-light">create an account or log in to post!</p>
+          {% endif %}
+        </div>
+        <div class="col-xl-10 col-md-10 col-sm-10 col-xs-12 bg-light text-secondary p-3 rounded-3 d-flex justify-content-between">
+          <div class="d-flex gap-1 align-items-center">
+            <p class="mb-0 user-select-none" style="font-size:1.1rem">Ordenar</p>
+            <a href="{{path('app_post_index')}}" style="color:black;">
+              <p type="submit" class="mb-0 icon-btn" style="font-size:1.1rem; border:none; outline:none;" id="newest" name="order">
+                <i class="fa-solid fa-arrow-up"></i>
+              </p>
+            </a>
+            <a href="{{path('app_post_order_2')}}" style="color:black;">
+              <p type="button" class="mb-0 icon-btn border-none" style="font-size:1.1rem" id="oldest" name="order">
+                <i class="fa-solid fa-arrow-down"></i>
+              </p>
+            </a>
+            <a href="{{path('app_post_order_3')}}" style="color:black;">
+              <p type="button" class="mb-0 icon-btn" style="font-size:1.1rem" id="popular" name="order">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+              </p>
+            </a>
+          </div>
+        </div>
+        <div class="col-xl-10 col-md-10 col-sm-10 col-xs-12 d-flex flex-column gap-3">
+        {% for post in posts %}
+          <article class="col-12 text-dark p-4 rounded-3 post-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="d-flex flex-column w-100">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex gap-2 align-items-center">
+                  <img src="{{post.author.imagePath ? post.author.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px; object-position:top;" alt="profile photo">
+                  <a href="/{{post.author.nick}}" class="post-user-name fs-5 text-decoration-none user-select-none">{{post.author.nick}}</a>
+                  {% if app.user %}
+                    {% if post.author.nick != app.user.nick %}
+                      {% if relations.findIfExists(app.user,post.author) %}
+                        {{ component('follow_sys', { 
+                            nick: post.author.nick,
+                            clicked: true
+                        }) }}
+                      {% else %}
+                        {{ component('follow_sys', { 
+                          nick: post.author.nick,
+                          clicked: false
+                        }) }}
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <div class="d-flex align-items-center px-1 gap-2">
+                  {% if (app.user) %}
+                    {% if (app.user.email == post.author.email) %}
+                      <div class="d-flex gap-1">
+                      {{ include('post/_delete_form.html.twig') }}
+                        <a href="{{ path('app_post_edit', {'id': post.id})}}" class="edit-btn"><i class="fa-regular fa-pen-to-square"></i></a>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                    <p class="text-secondary mb-0 user-select-none">{{post.createdAt | date("d/m/y h:m")}}</p>
+                </div>
+              </div>
+                <p class="fs-5 mb-0 user-select-none fw-normal">{{ post.title }}</p>
+              </div>
+
+            </div>
+            <p class="user-select-none fw-light">{{ post.description }}</p>
+            <div class="d-flex justify-content-between w-100 align-items-center">
+              <a href="{{path('app_post_show', {'id':post.id})}}">view post</a>
+              <div class="d-flex gap-2">
+            {% if app.user %}
+                {% if app.user and (votesPost.isVotedByUser(app.user, post)) == 1 %}
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <p class="text-center mb-0">{{ post.upVotes }}</p>
+                    <i class="fas fa-thumbs-up"></i>
+                  </div>
+                  <div class="d-flex align-items-center gap-1 text-secondary">
+                    <i class="fa-regular fa-thumbs-down"></i>
+                    <p class="text-center mb-0">{{ post.downVotes }}</p>
+                  </div>
+                </div>
+                {% else %} 
+                  {% if (votesPost.isVotedByUser(app.user, post)) == 0 %}
+                    <div class="d-flex align-items-center gap-1 text-secondary">
+                      <p class="text-center mb-0">{{ post.upVotes }}</p>
+                      <i class="fa-regular fa-thumbs-up"></i>
+                    </div>
+                    <div class="d-flex align-items-center gap-1 text-secondary">
+                      <i class="fas fa-thumbs-down"></i>
+                      <p class="text-center mb-0">{{ post.downVotes }}</p>
+                    </div>
+                    </div>
+                    {% else %}
+                      <div class="d-flex align-items-center gap-1 text-secondary">
+                          <p class="text-center mb-0">{{ post.upVotes }}</p>
+                          <i class="fa-regular fa-thumbs-up"></i>
+                        </div>
+                        <div class="d-flex align-items-center gap-1 text-secondary">
+                          <i class="fa-regular fa-thumbs-down"></i>
+                          <p class="text-center mb-0">{{ post.downVotes }}</p>
+                        </div>
+                      </div>
+                  {% endif %}
+                {% endif %}
+              {% else %}
+                <div class="d-flex align-items-center gap-1 text-secondary">
+                  <p class="text-center mb-0">{{ post.upVotes }}</p>
+                  <i class="fa-regular fa-thumbs-up"></i>
+                </div>
+                <div class="d-flex align-items-center gap-1 text-secondary">
+                  <i class="fa-regular fa-thumbs-down"></i>
+                  <p class="text-center mb-0">{{ post.downVotes }}</p>
+                </div>
+              </div>
+            {% endif %}
+            </div>
+          </article>
+          {% endfor %}
+{% endblock %}

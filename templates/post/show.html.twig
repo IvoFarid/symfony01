@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment index{% endblock %}
+
+{% block body %}
+
+  <div class="container mt-5 col-xs-10 col-md-10 col-xl-10 col-xxl-7 ps-4 pe-4 py-2 bg-light rounded-3">
+    <div class="flex flex-column text-dark border-bottom">
+        <div class="d-flex pt-3 pb-3 border-bottom justify-content-between align-items-center">
+          <div class="gap-1 d-flex align-items-center">
+            <a href="{{path('app_post_index')}}" class="text-dark fs-4 px-2 rounded-pill go-back-btn"><i class="fa-solid fa-angle-left"></i></a>
+            <div class="d-flex gap-2 align-items-center">
+              <img src="{{post.author.imagePath ? post.author.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+              <a href="/{{post.author.nick}}" class="card-title post-user-name text-decoration-none fw-light fs-5">{{post.author.nick}}</a>
+            </div>
+          </div>
+            
+          <div class="d-flex">
+            <p class="text-secondary mb-0">{{post.createdAt | date("d/m/y h:m")}}</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between pb-1 pt-2 ps-2 pe-2">
+          <p class="fs-4 fw-light mb-1">{{post.title}}</p>
+          {% if not (voted) %}
+            {{ component('post_vote', {
+              post: post,
+            }) }}
+              {% else %}
+                <div class="d-flex gap-3 fs-5">
+                          <div class="d-flex gap-1 align-items-center"> 
+                              {% if voteDirection %}
+                              <div class="voted-btn like d-flex align-items-center gap-1">
+                                <i class="fa fa-thumbs-up "></i>
+                                <p class=" mb-0">{{ post.upVotes }}</p>
+                              </div>
+                              {% else %}
+                                <i class="fa fa-thumbs-up"></i>
+                                <p class="mb-0">{{ post.upVotes }}</p>
+                              {% endif %}
+                          </div>
+                          <div class="d-flex gap-1 align-items-center">
+                              {% if not voteDirection %}
+                              <i class="fa fa-thumbs-down text-danger"></i>
+                                <p class="text-danger mb-0">{{ post.downVotes }}</p>
+                              {% else %}
+                              <i class="fa fa-thumbs-down"></i>
+                              <p class="mb-0">{{ post.downVotes }}</p>
+                              {% endif %}
+                          </div>
+                </div>
+              {% endif %}
+        </div>
+        <p style="font-size:1.1rem;" class="ps-2 pe-2 fw-light">{{post.description}}</p>
+    </div>
+  {% for comment in comments %}
+    <div class=" mt-3 card-body text-dark pb-3 border-bottom ps-2 pe-2">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex gap-2 align-items-center">
+          <img src="{{comment.imagePath ? comment.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+          <div class="d-flex gap-1">
+            <a href="{{path('user_profile', { 'nick': comment.nick})}}" class="card-title post-user-name text-decoration-none fw-light" style="font-size:1.09rem;">{{comment.nick}}</a>
+          </div>
+
+        </div>
+        {% if app.user %}
+          {% if app.user.nick == comment.nick %}
+            {{ include('comment/_delete_form.html.twig') }}
+            {% endif %}
+        {% endif %}
+      </div>
+      <div>
+        <p class="card-text fw-light" style="font-size:1.09rem;">{{comment.body}}</p>
+      </div>
+    </div>
+    {% else %}
+      <p class="text-secondary text-center pt-2 mb-0 fw-light">looks you're early, no one commented!</p>
+    {% endfor %} 
+    {% if app.user %}
+      {{ include('comment/_form.html.twig') }}
+    {% else %}
+      <p class="text-center text-secondary mb-0 pb-2 pt-3">log in or create an account to comment</p>
+    {% endif %}
+    
+  </div>
+{% endblock %}

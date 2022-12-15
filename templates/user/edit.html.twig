@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container mx-auto">
+      <div class="col-sm-7 col-md-7 col-lg-4 m-auto mt-5 justify-content-center d-flex flex-column gap-3 bg-light p-4 rounded-3">
+        <h5 class="mb-3 font-weight-normal text-dark">Edit User</h5>
+        {{ form_start(form) }}
+            {{ form_row(form.email,
+            {
+              'attr': {'class':'w-100',
+              'value': app.user.email },
+              'label_attr': {'class':'mb-1 text-dark mt-1'},
+            }) 
+            }}
+            {# <label for="oldPassword" class="mt-1">Actual Password (for security reasons!)</label>
+            <input type="password" id="oldPassword" class="w-100">  #}
+            {{ form_row(form.plainPassword) }}
+            {# <div class="d-flex flex-column justify-content-center gap-2 mb-1 mt-1">
+              <label for="passwordrepeat">Repeat password</label>
+              <input type="password" name="passwordrepeat" id="passwordrepeat">
+            </div> #}
+            {{ form_row(form.nick,
+              {
+                  label: 'Nickname (must be unique)',
+                  'attr': {'class': 'w-100',
+                  'value': app.user.nick },
+                  'label_attr': {'class':'mb-1 text-dark mt-1'} }) 
+            }}
+
+            <button type="submit" class="access-btn mt-3 w-100">Update</button>
+        {{ form_end(form) }}
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block body %}
+    {% if (app.user) %}
+      <h1>Create new Comment</h1>
+
+      {{ include('comment/_form.html.twig') }}
+    {% else %}
+      <h1>registrate o inicia sesión para publicar un comentario</h1>
+    {% endif %}
+{% endblock %}

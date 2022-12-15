@@ -1,0 +1,15 @@
+{# templates/components/random_number.html.twig #}
+<div {{ attributes }}>
+    <strong>{{ this.randomNumber }}</strong>
+
+    <button
+        data-action="live#$render"
+    >Generate a new number!</button>
+</div>
+<div {{ attributes }}>
+    {# <input data-model="debounce(300)|max"> #}
+    <input data-model="on(change)|max">
+    {# <input data-model="norender|max"> #}
+    Generating a number between 9 and {{ max }}
+    <strong>{{ this.randomNumber }}</strong>
+</div>

@@ -1,0 +1,23 @@
+{% if app.user %}
+  {% if clicked %}
+    <div {{attributes}}>
+      <button 
+      type="button" 
+      class="icon-btn border-0 px-2 py-1" 
+      data-action="live#action" 
+      data-action-name="follow(value={{false}}, nick={{nick}})">
+        <i class="fa-solid fa-user-minus"></i>
+      </button>
+    </div>
+  {% else %}
+    <div {{attributes}}>
+      <button 
+      type="button" 
+      class="icon-btn border-0 px-2 py-1" 
+      data-action="live#action" 
+      data-action-name="follow(value={{true}}, nick={{nick}})">
+        <i class="fa-solid fa-user-plus"></i>
+      </button>
+    </div>
+  {% endif %}  
+{% endif %}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <script src="https://kit.fontawesome.com/3846db9b4c.js" crossorigin="anonymous"></script>
+            <link href="https://api.fontshare.com/v2/css?f[]=supreme@400,200,300,500&display=swap" rel="stylesheet">
+            {# <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">     #}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        {% endblock %}
+        <style type="text/css">
+          body {
+            min-height: 100vh;
+            background: hsla(212, 35%, 58%, 1);
+            background: linear-gradient(90deg, hsla(212, 35%, 58%, 1) 0%, hsla(218, 32%, 80%, 1) 100%);
+            background: -moz-linear-gradient(90deg, hsla(212, 35%, 58%, 1) 0%, hsla(218, 32%, 80%, 1) 100%);
+            background: -webkit-linear-gradient(90deg, hsla(212, 35%, 58%, 1) 0%, hsla(218, 32%, 80%, 1) 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6D90B9", endColorstr="#BBC7DC", GradientType=1 );
+            font-family: 'Supreme', sans-serif;
+          }
+        </style>
+    </head>
+    <body>
+        {% block header %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm sticky-top">
+  <div class="container-fluid px-5">
+    <button class="navbar-toggler border-0" class="border-color: transparent !important;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <p class="user-select-none mb-0 fs-5 border-end pe-3" href="#"><span class="text-primary fs-4">S</span>YMFONY-01</p>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ms-2">
+          <a href="/posts" class="fs-5 nav-link" aria-current="page">Home</a>
+        </li>
+        <li class="nav-item ms-2">
+          <a href="{{path('app_post_following')}}" class="fs-5 nav-link" aria-current="page">Followed</a>
+        </li>
+        {# {% if app.user %}
+          <li class="nav-item">
+            <a href="/{{app.user.nick}}" class="fs-5 nav-link" aria-current="page"><span>{{app.user.nick}}</span></a>
+          </li>
+        {% endif %} #}
+      </ul>
+      <div class="d-flex align-items-center gap-2 me-5">
+      {% if (app.user) %}
+        {# <a href="/{{app.user.nick}}" class="fs-5 user-nick-nav">{{app.user.nick}}</a> #}
+        {# <li class="nav-item"> #}
+        <div class="dropdown me-5">
+          <a class="nav-link d-flex gap-2 align-items-center dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{app.user.imagePath ? app.user.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+            <p class="nav-link mb-0" style="font-size:1.2rem"><span>{{app.user.nick}}</span></p>
+          </a>
+          <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="{{path('user_profile', { 'nick': app.user.nick})}}">Profile</a></li>
+            <li><a class="dropdown-item" href="{{path('user_profile_edit', { 'nick': app.user.nick})}}">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </div>
+        {# <a href="/{{app.user.nick}}" class="fs-5 nav-link d-flex gap-2 align-items-center" aria-current="page">
+          <img src="{{app.user.imagePath ? app.user.imagePath : '/img/userdefault.jpg'}}" class="img-fluid rounded-circle shadow-4" style="object-fit: cover; width: 35px; height:35px;" alt="profile photo">
+          <p href="/{{app.user.nick}}" class="fs-5 nav-link mb-0" aria-current="page"><span>{{app.user.nick}}</span></p>
+        </a> #}
+        {# </li> #}
+      {% else %}
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ms-2">
+          <a type="button" class="fs-5 nav-link" href="/register">
+          Sign up
+        </a>
+        </li>
+        <li class="nav-item ms-2">
+          <a type="button" class="fs-5 nav-link" href="/login">
+          Log in
+        </a>
+        </li>
+      </ul>
+        {# <a type="button" class="fs-5 nav-link"href="/register">
+          Sign up
+        </a>
+        <a type="button" href="/login">
+          Log in
+        </a> #}
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+        {% endblock %}
+        {% block body %}
+        
+        {% endblock %}
+    </body>
+</html>

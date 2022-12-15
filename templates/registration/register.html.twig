@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container justify-content-center">
+      <div class="col-sm-7 col-md-7 col-lg-5 col-xl-4 col-xxl-4 m-auto mt-5 justify-content-center d-flex flex-column gap-3 bg-light p-4 rounded-3">
+        <h5 class="mb-3 font-weight-normal text-dark">Register</h5>
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email,
+            {
+              'attr': {'class':'w-100'},
+              'label_attr': {'class':'mb-1 text-dark mt-1'}
+            }) 
+            }} 
+            {{ form_row(registrationForm.plainPassword) }}
+            {# <div class="d-flex flex-column justify-content-center gap-2 mb-1 mt-1">
+              <label for="passwordrepeat">Repeat password</label>
+              <input type="password" name="passwordrepeat" id="passwordrepeat">
+            </div> #}
+             {{ form_row(registrationForm.nick, 
+            {
+                label: 'Nickname (must be unique)',
+                'attr': {'class': 'w-100'},
+                'label_attr': {'class':'mb-1 text-dark mt-1'} }) 
+            }}
+
+            <button type="submit" class="access-btn mt-3 w-100">Register</button>
+        {{ form_end(registrationForm) }}
+        <a href="/login" class="mb-0 text-dark text-center">already have an account? login here</a>
+      </div>
+    </div>
+{% endblock %}
