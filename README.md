@@ -12,3 +12,4 @@ for any errors, verify:
 - versions of PHP and Symfony (PHP>7, SYMFONY 6)
 - WAMP or XAMPP running on background (must be)
 - setting enviroment variables for symfony or composer in windows/macOs
+- having the symfony.exe that is required for the enviroment variable 
