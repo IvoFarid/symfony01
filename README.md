@@ -9,7 +9,7 @@ FOR LOCAL:
 6) run symfony server:start and npm run watch for the live components of SymfonyUX
 
 for any errors, verify:
-- versions of PHP and Symfony (PHP>7, SYMFONY 6)
+- versions of PHP and Symfony (PHP 8.1 or +, SYMFONY 6)
 - WAMP or XAMPP running on background (must be)
 - setting enviroment variables for symfony or composer in windows/macOs
 - having the symfony.exe that is required for the enviroment variable 
