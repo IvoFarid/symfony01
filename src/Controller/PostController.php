@@ -53,12 +53,8 @@ class PostController extends AbstractController
               $data->setDownVotes(0);
               $this->em->persist($data);
               $this->em->flush();
-              return $this->renderForm('post/index.html.twig', [
-                'posts' => $posts,
-                'form' => $form,
-                'votesPost' => $votesPost,
-                'relations' => $relations
-            ]);
+             return $this->redirect($request->getUri());
+
             }
           }
       return $this->renderForm('post/index.html.twig', [
@@ -91,12 +87,8 @@ class PostController extends AbstractController
               $data->setDownVotes(0);
               $this->em->persist($data);
               $this->em->flush();
-              return $this->renderForm('post/index.html.twig', [
-                'posts' => $posts,
-                'form' => $form,
-                'votesPost' => $votesPost,
-                'relations' => $relations
-            ]);
+              return $this->redirect($request->getUri());
+
             }
           }
 
@@ -130,12 +122,8 @@ class PostController extends AbstractController
               $data->setDownVotes(0);
               $this->em->persist($data);
               $this->em->flush();
-              return $this->renderForm('post/index.html.twig', [
-                'posts' => $posts,
-                'form' => $form,
-                'votesPost' => $votesPost,
-                'relations' => $relations
-            ]);
+              return $this->redirect($request->getUri());
+
             }
           }
 
