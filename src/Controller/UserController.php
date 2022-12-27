@@ -53,6 +53,15 @@ class UserController extends AbstractController
             {
               $this->GetParameter('kernel.project_dir') . $mainUser->getImagePath();
             }
+            $oldFilename = str_replace("/",'\\',$oldFilename);
+            // dd($this->GetParameter('kernel.project_dir') . $oldFilename);
+            // $filesystem = new Filesystem();
+            // $filesystem->remove($root . $oldFilename);
+            if
+              (file_exists($this->getParameter('kernel.project_dir')  . '\public\\' . $oldFilename))
+                {
+                  unlink($this->GetParameter('kernel.project_dir') . '\public\\' . $oldFilename);
+                }
       }
       try {
         $imageFile->move(
@@ -60,17 +69,7 @@ class UserController extends AbstractController
             $newFileName
         );
         // $root = str_replace("\\",'/',$this->GetParameter('kernel.project_dir'));
-        $oldFilename = str_replace("/",'\\',$oldFilename);
-        // dd($this->GetParameter('kernel.project_dir') . $oldFilename);
-        // $filesystem = new Filesystem();
-        // $filesystem->remove($root . $oldFilename);
-
-
-        if
-          (file_exists($this->getParameter('kernel.project_dir')  . '\public\\' . $oldFilename))
-            {
-              unlink($this->GetParameter('kernel.project_dir') . '\public\\' . $oldFilename);
-            }
+        
         
         } catch (FileException $e){
             return new Response($e->getMessage());
